@@ -103,6 +103,7 @@ public class salaVista {
     public salaVista() {
     }
     public void registrarClase() {
+        
       try {
         Clase nuevaClase = new Clase();
        
