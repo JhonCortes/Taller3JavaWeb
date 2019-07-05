@@ -23,6 +23,8 @@ public interface ClaseFacadeLocal {
     void remove(Clase clase);
 
     Clase find(Object id);
+    
+    Clase findNum (int num);
 
     List<Clase> findAll();
 

@@ -8,7 +8,9 @@ package Persistencia;
 import Modelo.Clase;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,17 @@ public class ClaseFacade extends AbstractFacade<Clase> implements ClaseFacadeLoc
 
     public ClaseFacade() {
         super(Clase.class);
+    }
+
+    @Override
+    public Clase findNum(int num) {
+        String consulta = "SELECT c FROM Clase c WHERE c.numero=" + num;
+        try {
+            Query query = em.createQuery(consulta);
+            return (Clase) query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
     
 }
