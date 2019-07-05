@@ -16,30 +16,32 @@ import Persistencia.UsuarioFacadeLocal;
  */
 @Stateless
 public class usuarioLogica implements usuarioLogicaLocal {
+
     @EJB
     private UsuarioFacadeLocal usuarioDAO;
-    
+
     @Override
     public Usuario ingresar(Usuario usuario) throws Exception {
-        if (usuario == null){
+        if (usuario == null) {
             throw new Exception("Usuario vacio");
         }
-        if (usuario.getDocumento().equals("")){
+        if (usuario.getDocumento().equals("")) {
             throw new Exception("Nombre de usuario obligatorio");
         }
-        if (usuario.getClave().equals("")){
+        if (usuario.getClave().equals("")) {
             throw new Exception("Clave es obligatorio");
         }
         Usuario objUsuario = usuarioDAO.find(usuario.getDocumento());
-        if (objUsuario == null){
+        if (objUsuario == null) {
             throw new Exception("Usuario no registrado!");
         }
-        if (!usuario.getClave().equals(objUsuario.getClave())){
+        if (!usuario.getClave().equals(objUsuario.getClave())) {
             throw new Exception("La clave no es valida!");
         }
-        return objUsuario; 
+        return objUsuario;
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+    
 }

@@ -21,7 +21,7 @@ public interface UsuarioFacadeLocal {
     void edit(Usuario usuario);
 
     void remove(Usuario usuario);
-
+    
     Usuario find(Object id);
 
     List<Usuario> findAll();

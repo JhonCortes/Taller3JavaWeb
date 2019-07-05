@@ -64,7 +64,7 @@ public class usuarioVista {
     public void ingresar() {
         try {
             Usuario nuevoUsuario = new Usuario();
-            nuevoUsuario.setDocumento(txtUsuario.getValue().hashCode());
+            nuevoUsuario.setDocumento(Integer.parseInt(txtUsuario.getValue().toString()));
             nuevoUsuario.setClave(txtClave.getValue().toString());
             Usuario usuarioLogueado = usuarioLogica.ingresar(nuevoUsuario);
             
@@ -73,8 +73,14 @@ public class usuarioVista {
                     .getSessionMap().put("usuario", usuarioLogueado);
             
             //Redirecciono a la pagina deseada
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .redirect("admin/paginaContratista.xhtml");
+            if (usuarioLogueado.getDependencia().equals("secretaria")){
+                FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect("admin/secretaria.xhtml");
+            }else{
+                FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect("admin/sala.xhtml");
+            }
+            
             
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, 
@@ -95,5 +101,6 @@ public class usuarioVista {
             Logger.getLogger(usuarioVista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
 }
