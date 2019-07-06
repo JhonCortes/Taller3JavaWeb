@@ -23,7 +23,7 @@ import org.primefaces.event.SelectEvent;
  */
 @Named(value = "secretariaVista")
 @Dependent
-public class secretariaVista {
+public class docenteVista {
     
     private InputText txtDocumento;
     private InputText txtNombre;
@@ -83,7 +83,7 @@ public class secretariaVista {
     /**
      * Creates a new instance of secretariaVista
      */
-    public secretariaVista() {
+    public docenteVista() {
     }
     
     public void registrarDocente() {
@@ -94,7 +94,7 @@ public class secretariaVista {
             nuevoDocente.setApellido(txtApellido.getValue().toString());
             nuevoDocente.setCorreoElectronico(txtCorreo.getValue().toString());
             nuevoDocente.setTelefono(txtTelefono.getValue().toString());
-           // docenteLogica.registrarDocente(nuevoDocente);
+            //docenteLogica.registrarDocente(nuevoDocente);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje",
                             "Docente registrado correctamente!"));
@@ -102,7 +102,7 @@ public class secretariaVista {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje",
                             ex.getMessage()));
-            Logger.getLogger(secretariaVista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(docenteVista.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -132,7 +132,7 @@ public class secretariaVista {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje",
                             ex.getMessage()));
-            Logger.getLogger(secretariaVista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(docenteVista.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -147,7 +147,7 @@ public class secretariaVista {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje",
                             ex.getMessage()));
-            Logger.getLogger(secretariaVista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(docenteVista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
