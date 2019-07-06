@@ -6,6 +6,8 @@
 package Logica;
 
 import Modelo.Docente;
+import Persistencia.DocenteFacadeLocal;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -15,25 +17,67 @@ import javax.ejb.Stateless;
 @Stateless
 public class docenteLogica implements docenteLogicaLocal {
 
+    @EJB
+    public DocenteFacadeLocal docenteDAO;
+
     @Override
     public void registrarDocente(Docente c) throws Exception {
-         if (c==null) {
+        if (c == null) {
             throw new Exception("Todos los datos son necesarios");
         }
-         if (c.getDocumento().equals("") ||  c.getDocumento() == null){
-             throw new Exception("El Documento es necesario");
-         }
-         
+        if (c.getDocumento().equals("") || c.getDocumento() == null) {
+            throw new Exception("El Documento es necesario");
+        }
+        if (c.getNombre().equals("")) {
+            throw new Exception("El Nombre es necesario");
+        }
+        if (c.getApellido().equals("")) {
+            throw new Exception("El Apellido es necesario");
+        }
+        if (c.getCorreoElectronico().equals("")) {
+            throw new Exception("El Correo electronico es necesario");
+        }
+        if (c.getTelefono().equals("") || c.getTelefono() == null) {
+            throw new Exception("El Telefono es necesario");
+        }
+        docenteDAO.create(c);
     }
 
     @Override
     public void modificarDocente(Docente c) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (c == null) {
+            throw new Exception("El Docente no tiene información");
+        }
+        if (c.getDocumento() == null || c.getDocumento().equals(c)) {
+            throw new Exception("El Documento es obligatorio");
+        }
+        if (c.getNombre().equals("")) {
+            throw new Exception("El nombre es obligatorio");
+        }
+        if (c.getApellido().equals("")) {
+            throw new Exception("El Apellido es necesario");
+        }
+        if (c.getCorreoElectronico().equals("")) {
+            throw new Exception("El Correo electronico es necesario");
+        }
+        if (c.getTelefono().equals("") || c.getTelefono() == null) {
+            throw new Exception("El Telefono es necesario");
+        }
+        docenteDAO.edit(c);
     }
 
     @Override
     public void eliminarDocente(Docente c) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (c==null) {
+            throw new Exception("El Docente no tiene información");
+        }
+        
+        Docente objBorrar = docenteDAO.find(c.getDocumento());
+        
+        if(objBorrar == null){
+            throw new Exception("El Docente no existe");
+        }
+        docenteDAO.remove(c);
     }
 
     // Add business logic below. (Right-click in editor and choose
