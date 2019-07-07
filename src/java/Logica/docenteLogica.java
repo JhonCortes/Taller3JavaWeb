@@ -7,6 +7,7 @@ package Logica;
 
 import Modelo.Docente;
 import Persistencia.DocenteFacadeLocal;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -82,4 +83,10 @@ public class docenteLogica implements docenteLogicaLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public List<Docente> consultasDocente() {
+       return docenteDAO.findAll();
+    }
+
 }

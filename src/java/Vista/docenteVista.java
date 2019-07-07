@@ -5,15 +5,17 @@
  */
 package Vista;
 
-
 import Logica.docenteLogica;
+import Logica.docenteLogicaLocal;
 import Modelo.Docente;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.event.SelectEvent;
 
@@ -21,16 +23,44 @@ import org.primefaces.event.SelectEvent;
  *
  * @author usuario
  */
-@Named(value = "secretariaVista")
-@Dependent
+@Named(value = "docenteVista")
+@RequestScoped
 public class docenteVista {
+
+    docenteLogicaLocal docenteL;    
     
     private InputText txtDocumento;
     private InputText txtNombre;
     private InputText txtApellido;
     private InputText txtCorreo;
     private InputText txtTelefono;
+    private CommandButton btnRegistrar;
+    private CommandButton btnModificar;
+    private CommandButton btnLimpiar;
+    private CommandButton btnEliminar;
     private Docente selectedDocente;
+    private List<Docente> listaDocente;
+
+    public List<Docente> getListaDocente() {
+        try {
+         listaDocente = docenteL.consultasDocente();
+        return listaDocente; 
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "No hay datos",
+                            ex.getMessage()));
+            Logger.getLogger(docenteVista.class.getName()).log(Level.SEVERE, null, ex);
+            return listaDocente;
+        }
+        
+    }
+
+    public void setListaDocente(List<Docente> listaDocente) {
+        this.listaDocente = listaDocente;
+    }
+
+
+    
 
     public InputText getTxtDocumento() {
         return txtDocumento;
@@ -80,12 +110,44 @@ public class docenteVista {
         this.selectedDocente = selectedDocente;
     }
 
+    public CommandButton getBtnRegistrar() {
+        return btnRegistrar;
+    }
+
+    public void setBtnRegistrar(CommandButton btnRegistrar) {
+        this.btnRegistrar = btnRegistrar;
+    }
+
+    public CommandButton getBtnModificar() {
+        return btnModificar;
+    }
+
+    public void setBtnModificar(CommandButton btnModificar) {
+        this.btnModificar = btnModificar;
+    }
+
+    public CommandButton getBtnLimpiar() {
+        return btnLimpiar;
+    }
+
+    public void setBtnLimpiar(CommandButton btnLimpiar) {
+        this.btnLimpiar = btnLimpiar;
+    }
+
+    public CommandButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(CommandButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
     /**
      * Creates a new instance of secretariaVista
      */
     public docenteVista() {
     }
-    
+
     public void registrarDocente() {
         try {
             Docente nuevoDocente = new Docente();
@@ -94,7 +156,7 @@ public class docenteVista {
             nuevoDocente.setApellido(txtApellido.getValue().toString());
             nuevoDocente.setCorreoElectronico(txtCorreo.getValue().toString());
             nuevoDocente.setTelefono(txtTelefono.getValue().toString());
-            //docenteLogica.registrarDocente(nuevoDocente);
+            docenteL.registrarDocente(nuevoDocente);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje",
                             "Docente registrado correctamente!"));
@@ -106,7 +168,7 @@ public class docenteVista {
         }
 
     }
-    
+
     public void seleccionarDocente(SelectEvent e) {
         selectedDocente = (Docente) e.getObject();
         txtDocumento.setValue(selectedDocente.getDocumento());
@@ -115,7 +177,7 @@ public class docenteVista {
         txtCorreo.setValue(selectedDocente.getCorreoElectronico());
         txtTelefono.setValue(selectedDocente.getTelefono());
     }
-    
+
     public void modificarDocente() {
         try {
             Docente nuevoDocente = new Docente();
@@ -124,7 +186,7 @@ public class docenteVista {
             nuevoDocente.setApellido(txtApellido.getValue().toString());
             nuevoDocente.setCorreoElectronico(txtCorreo.getValue().toString());
             nuevoDocente.setTelefono(txtTelefono.getValue().toString());
-           // docenteLogica.modificarDocente(nuevoDocente);
+            docenteL.modificarDocente(nuevoDocente);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje",
                             "Docente Modificado correctamente!"));
@@ -136,10 +198,10 @@ public class docenteVista {
         }
 
     }
-    
+
     public void eliminarDocente() {
         try {
-           // docenteLogica.eliminarDocente(selectedDocente);
+            docenteL.eliminarDocente(selectedDocente);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje",
                             "Docente Eliminado correctamente!"));
@@ -150,4 +212,6 @@ public class docenteVista {
             Logger.getLogger(docenteVista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
 }

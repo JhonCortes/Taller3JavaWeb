@@ -5,7 +5,6 @@
  */
 package Persistencia;
 
-import Modelo.Docente;
 import Modelo.Usuario;
 import java.util.List;
 import javax.ejb.Local;
@@ -22,7 +21,7 @@ public interface UsuarioFacadeLocal {
     void edit(Usuario usuario);
 
     void remove(Usuario usuario);
-    
+
     Usuario find(Object id);
 
     List<Usuario> findAll();
@@ -30,6 +29,5 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-
     
 }
